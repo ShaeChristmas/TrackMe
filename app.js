@@ -26,10 +26,10 @@ devices.forEach(function(device) {
     table.appendChild(row);
     */
 
-    $('#devices tbody').append(
+    $('#devices tbody').append('
         <tr>
             <td>$(device.user)</td>
             <td>$(device.name)</td>
-        </tr>
+        </tr>'
     );
 });
