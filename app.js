@@ -1,9 +1,11 @@
+//Init device list
 const devices = [];
-
+//Populate devices with some data.
 devices.push({user: "Shae", name: "Shae's Laptop"});
 devices.push({ user: "Mary", name: "Mary's iPhone" });
 devices.push({ user: "Shae", name: "Shae's Pixel 3" });
 
+//Displays each device on the Table.
 devices.forEach(function(device) {
     $('#devices tbody').append(`
         <tr>
@@ -32,3 +34,24 @@ devices.forEach(function(device) {
     table.appendChild(row);
     */
 });
+
+//Listener for the Registration of a new Device.
+
+$('add-device').on('click',function() {
+    const user = $('user').val();
+    const name = $('#name').val();
+    devices.push({user: user, name:name});
+    console.log(devices);
+})
+
+/*
+This method is good, but can be condensed. See above method.
+
+document.querySelector('#add-device').addEventListener('click',
+function() {
+    const user = document.querySelector('#user').value;
+    const name = document.querySelector('#name').value;
+    devices.push({user: user, name:name});
+    console.log(devices);
+})
+*/
