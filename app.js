@@ -5,6 +5,12 @@ devices.push({ user: "Mary", name: "Mary's iPhone" });
 devices.push({ user: "Shae", name: "Shae's Pixel 3" });
 
 devices.forEach(function(device) {
+    $('#devices tbody').append(`
+        <tr>
+            <td>${device.user}</td>
+            <td>${device.name}</td>
+        </tr>`
+    );
     /*
     This code wasn't used as its longer and more complex than the used code.
     However, its useful for this to remain as it allows for me to gain a better understanding of 
@@ -25,11 +31,4 @@ devices.forEach(function(device) {
 
     table.appendChild(row);
     */
-
-    $('#devices tbody').append('
-        <tr>
-            <td>$(device.user)</td>
-            <td>$(device.name)</td>
-        </tr>'
-    );
 });
