@@ -37,12 +37,12 @@ devices.forEach(function(device) {
 
 //Listener for the Registration of a new Device.
 
-$('add-device').on('click',function() {
-    const user = $('user').val();
+$('#add-device').on('click', function() {
+    const user = $('#user').val();
     const name = $('#name').val();
     devices.push({user, name});
     console.log(devices);
-})
+});
 
 /*
 This method is good, but can be condensed. See above method.
@@ -53,5 +53,5 @@ function() {
     const name = document.querySelector('#name').value;
     devices.push({user: user, name:name});
     console.log(devices);
-})
+});
 */
