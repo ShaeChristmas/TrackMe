@@ -1,9 +1,9 @@
 //Init device list
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
-//Populate devices with some data.
-devices.push({user: "Shae", name: "Shae's Laptop"});
-devices.push({ user: "Mary", name: "Mary's iPhone" });
-devices.push({ user: "Shae", name: "Shae's Pixel 3" });
+
+//devices.push({user: "Shae", name: "Shae's Laptop"});
+//devices.push({ user: "Mary", name: "Mary's iPhone" });
+//devices.push({ user: "Shae", name: "Shae's Pixel 3" });
 
 //Displays each device on the Table.
 devices.forEach(function(device) {
