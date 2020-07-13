@@ -57,3 +57,8 @@ function() {
     console.log(devices);
 });
 */
+//Listener for Send Command.
+$('#send-command').on('click', function() {
+    const command = $('command').val();
+    console.log(`command is: ${command}`);
+})
