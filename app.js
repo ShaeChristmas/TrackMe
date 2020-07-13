@@ -1,5 +1,5 @@
 //Init device list
-const devices = [];
+const devices = JSON.parse(localStorage.getItem('devices')) || [];
 //Populate devices with some data.
 devices.push({user: "Shae", name: "Shae's Laptop"});
 devices.push({ user: "Mary", name: "Mary's iPhone" });
@@ -41,7 +41,9 @@ $('#add-device').on('click', function() {
     const user = $('#user').val();
     const name = $('#name').val();
     devices.push({user, name});
-    console.log(devices);
+    //console.log(devices);         Used for testing.
+    localStorage.setItem('devices',JSON.stringify(devices));
+    location.href = 'device-list.html';
 });
 
 /*
