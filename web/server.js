@@ -22,7 +22,7 @@ the arrow is used in place of the function keyword, that line could be written a
 gives a clearer syntax.
 */
 app.get('/',(req, res) => {
-    res.send('hello world');
+    res.sendfile(`${base}/device-list.html`);
 });
 
 //listens on a port, gives output on port in console.
