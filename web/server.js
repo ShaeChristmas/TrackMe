@@ -4,7 +4,7 @@ const port = 3000;
 const base = `${__dirname}/public`;
 
 //middleware
-app.arguments(express.static('public'));
+app.use(express.static('public'));
 
 /*
 This is a route middleware. This means whenever the server gets a req(est),
