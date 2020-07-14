@@ -40,4 +40,4 @@ app.get('*',(req,res) => {
 //listens on a port, gives output on port in console.
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
-})
+});
