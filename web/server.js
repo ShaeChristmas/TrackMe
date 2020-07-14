@@ -24,7 +24,7 @@ gives a clearer syntax.
 app.get('/',(req, res) => {
     res.sendfile(`${base}/device-list.html`);
 });
-app.get('/',(req,res) => {
+app.get('*',(req,res) => {
     res.sendfile(`${base}/404.html`);
 });
 
