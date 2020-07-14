@@ -1,4 +1,5 @@
 $('#navbar').load('navbar.html');
+$('#footer').load('footer.html');
 //Init device list
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
 
