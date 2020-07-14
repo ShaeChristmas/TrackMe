@@ -73,8 +73,14 @@ $('#reg-account').on('click', function() {
     const Cpass = $('#Cpassword').val();
 
     const exists = users.find(name => users.name === username);
-    if (typeof name !== "undefined") {
-        <label for="UsernameErrorMessage">User Already Exists</label>
-
+    if (typeof exists !== "undefined") {
+        if (pass === Cpass) {
+            users.push({name: username, pass});
+            localStorage.setItem('users',JSON.stringify(users));
+        }else{
+            $('#passErrorMessage').addClass("alert alert-error").text("Passwords do not match.");   
+        }
+    }else{
+        $('#usernameErrorMessage').addClass("alert alert-error").text("Username already exists. Please input a new username.");
     }
 });

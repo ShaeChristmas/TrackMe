@@ -21,6 +21,12 @@ the arrow is used in place of the function keyword, that line could be written a
 
 gives a clearer syntax.
 */
+app.get('/login',(req, res) => {
+    res.sendfile(`${base}/login.html`);
+});
+app.get('/registration',(req, res) => {
+    res.sendfile(`${base}/registration.html`);
+});
 app.get('/register-device',(req, res) => {
     res.sendfile(`${base}/register-device.html`);
 });
