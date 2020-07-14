@@ -2,6 +2,7 @@ $('#navbar').load('navbar.html');
 $('#footer').load('footer.html');
 //Init device list
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
+const users = JSON.parse(localStorage.getItem('users')) || [];
 
 //devices.push({user: "Shae", name: "Shae's Laptop"});
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
@@ -63,4 +64,17 @@ function() {
 $('#send-command').on('click', function() {
     const command = $('#command').val();
     console.log(`command is: ${command}`);
+});
+
+//Listener for Register Account
+$('#reg-account').on('click', function() {
+    const username = $('#user').val();
+    const pass = $('#password').val();
+    const Cpass = $('#Cpassword').val();
+
+    const exists = users.find(name => users.name === username);
+    if (typeof name !== "undefined") {
+        <label for="UsernameErrorMessage">User Already Exists</label>
+
+    }
 });
