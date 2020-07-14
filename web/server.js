@@ -24,6 +24,9 @@ gives a clearer syntax.
 app.get('/',(req, res) => {
     res.sendfile(`${base}/device-list.html`);
 });
+app.get('/',(req,res) => {
+    res.sendfile(`${base}/404.html`);
+});
 
 //listens on a port, gives output on port in console.
 app.listen(port, () => {
