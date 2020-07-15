@@ -11,7 +11,15 @@
             <a class="nav-item nav-link" href="/register-device">Register 7 / 8 Device</a>
             <a class="nav-item nav-link" href="/send-command">Send Command</a>
             <a class="nav-item nav-link" href="/about">About Me</a>
+            <div id='auth-nav' class='navbar-nav'></div>
         </div>
     </div>
+    <script>
+        const isAuthenicated = localStorage.getItem('isAuthenticated');
+        const logoutElement = '<a class="nav-item nav-link" onClick = "logout()">Logout</a>';
+        const loginElement = '<a class ="nav-item nav-link" href="/login">Login</a>'
+
+        isAuthenicated ? $('#auth-nav').append(logoutElement) : $('#auth-nav').append(loginElement);
+    </script>
 </nav>
    
