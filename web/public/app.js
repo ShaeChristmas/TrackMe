@@ -68,7 +68,7 @@ $('#send-command').on('click', function() {
 
 //Listener for Register Account
 $('#reg-account').on('click', function() {
-    const username = $('#user').val();
+    const username = $('#username').val();
     const pass = $('#password').val();
     const Cpass = $('#Cpassword').val();
 
