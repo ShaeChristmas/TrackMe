@@ -3,7 +3,6 @@ $('#footer').load('footer.html');
 //Init device list
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
 const users = JSON.parse(localStorage.getItem('users')) || [];
-isAuthenticated = localStorage.getItem('authenticated') || false;
 
 //devices.push({user: "Shae", name: "Shae's Laptop"});
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
@@ -102,7 +101,7 @@ $('#login').on('click', function() {
     if (exists !== undefined) {
         if (exists.pass === pass) {
             isAuthenticated = true;
-            localStorage.setItem(isAuthenticated,true);
+            localStorage.setItem('isAuthenticated',isAuthenticated);
             location.href = '/';
             console.log('loged in.');
         }else{
@@ -112,3 +111,8 @@ $('#login').on('click', function() {
         $('#loginUsernameErrorMessage').addClass("alert alert-error").text("This Username does not exist.");
     }
 });
+
+const logout = () => {
+    localStorage.removeItem('isAuthenticated');
+    location.href = '/login';
+}
