@@ -1,3 +1,19 @@
+
+<div>
+    <div id = 'loginPrompt'></div>
+    <p><br></p>
+</div>
+
+<script>
+    const isAuth = localStorage.getItem('isAuthenticated') || null;
+
+    if ((isAuth!==null)||(location.href == 'http://localhost:3000/register-device')) {
+        $('#loginPrompt').append('');
+    }else{
+        $('#loginPrompt').append("Don't have an account? Register <a href='/Registration'>here.</a>");
+    }
+
+</script>
 <script>
     var date = new Date();
     $('#footer-text').text(`Copyright Shaine Christmas ${date.getFullYear() }`);

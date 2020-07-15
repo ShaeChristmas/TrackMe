@@ -96,14 +96,12 @@ $('#login').on('click', function() {
     $('#loginUsernameErrorMessage').removeClass().text("");
 
     const exists = users.find(user => user.name === username);
-    console.log(exists);
 
     if (exists !== undefined) {
         if (exists.pass === pass) {
             isAuthenticated = true;
             localStorage.setItem('isAuthenticated',isAuthenticated);
             location.href = '/';
-            console.log('loged in.');
         }else{
             $('#loginPassErrorMessage').addClass("alert alert-error").text('Incorrect Password');
         }
