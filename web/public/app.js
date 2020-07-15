@@ -3,6 +3,7 @@ $('#footer').load('footer.html');
 //Init device list
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
 const users = JSON.parse(localStorage.getItem('users')) || [];
+isAuthenticated = localStorage.getItem('authenticated') || false;
 
 //devices.push({user: "Shae", name: "Shae's Laptop"});
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
@@ -86,5 +87,28 @@ $('#reg-account').on('click', function() {
         }
     }else{
         $('#usernameErrorMessage').addClass("alert alert-error").text("Username already exists. Please input a new username.");
+    }
+});
+
+$('#login').on('click', function() {
+    const username = $('#username').val();
+    const pass = $('#password').val();
+    $('#loginPassErrorMessage').removeClass().text("");
+    $('#loginUsernameErrorMessage').removeClass().text("");
+
+    const exists = users.find(user => user.name === username);
+    console.log(exists);
+
+    if (exists !== undefined) {
+        if (exists.pass === pass) {
+            isAuthenticated = true;
+            localStorage.setItem(isAuthenticated,true);
+            location.href = '/';
+            console.log('loged in.');
+        }else{
+            $('#loginPassErrorMessage').addClass("alert alert-error").text('Incorrect Password');
+        }
+    }else{
+        $('#loginUsernameErrorMessage').addClass("alert alert-error").text("This Username does not exist.");
     }
 });
