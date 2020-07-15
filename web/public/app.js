@@ -71,9 +71,13 @@ $('#reg-account').on('click', function() {
     const username = $('#username').val();
     const pass = $('#password').val();
     const Cpass = $('#Cpassword').val();
+    $('#passErrorMessage').removeClass().text("");
+    $('#usernameErrorMessage').removeClass().text("");
 
-    const exists = users.find(name => users.name === username);
-    if (typeof exists !== "undefined") {
+    const exists = users.find(user => user.name === username);
+    //console.log(exists);
+
+    if (exists == undefined) {
         if (pass === Cpass) {
             users.push({name: username, pass});
             localStorage.setItem('users',JSON.stringify(users));
