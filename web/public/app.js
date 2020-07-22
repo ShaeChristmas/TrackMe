@@ -63,10 +63,21 @@ $.get('http://localhost:3001/devices')
 $('#add-device').on('click', function() {
     const user = $('#user').val();
     const name = $('#name').val();
-    devices.push({user, name});
-    //console.log(devices);         Used for testing.
-    localStorage.setItem('devices',JSON.stringify(devices));
-    location.href = '/';
+    const sensorData = [];
+
+    const body = {
+        name,
+        user,
+        sensorData
+    };
+
+    $.post('http://localhost:3001/devices', body)
+    .then(response => {
+        location.href = '/';
+    })
+    .catch(error => {
+        console.error(`Error: ${error}`);
+    });
 });
 
 /*
