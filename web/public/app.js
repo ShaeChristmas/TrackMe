@@ -8,6 +8,9 @@ const users = JSON.parse(localStorage.getItem('users')) || [];
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
 //devices.push({ user: "Shae", name: "Shae's Pixel 3" });
 
+/*
+This code is no longer needed, as the listing of items is left to the json-server
+
 //Displays each device on the Table.
 devices.forEach(function(device) {
     $('#devices tbody').append(`
@@ -35,8 +38,25 @@ devices.forEach(function(device) {
     row.appendChild(name);
 
     table.appendChild(row);
-    */
 });
+*/
+$.get('http://localhost:3001/devices')
+.then(response => {
+    response.forEach(function(device) {
+        $('#devices tbody').append(`
+            <tr>
+                <td>${device.user}</td>
+                <td>${device.name}</td>
+            </tr>`
+        );
+    });
+})
+.catch(error => {
+    console.log(`Error: ${error}`);
+});
+
+
+
 
 //Listener for the Registration of a new Device.
 
