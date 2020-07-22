@@ -4,6 +4,8 @@ $('#footer').load('footer.html');
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
 const users = JSON.parse(localStorage.getItem('users')) || [];
 
+const API_URL = 'http://localhost:5000/api';
+
 //devices.push({user: "Shae", name: "Shae's Laptop"});
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
 //devices.push({ user: "Shae", name: "Shae's Pixel 3" });
@@ -40,7 +42,7 @@ devices.forEach(function(device) {
     table.appendChild(row);
 });
 */
-$.get('http://localhost:3001/devices')
+$.get(`${API_URL}/devices`)
 .then(response => {
     response.forEach(function(device) {
         $('#devices tbody').append(`
@@ -71,7 +73,7 @@ $('#add-device').on('click', function() {
         sensorData
     };
 
-    $.post('http://localhost:3001/devices', body)
+    $.post(`${API_URL}/devices`, body)
     .then(response => {
         location.href = '/';
     })
