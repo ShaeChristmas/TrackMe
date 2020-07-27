@@ -94,6 +94,15 @@ app.post('/api/authenticate',(req,res)=> {
     });
 });
 
+
+app.get('/api/users/:user/devices',(req,res)=> {
+    const {user} = req.params;
+    Device.find({"user": user},(err,devices)=>{
+        return err
+        ? res.send(err)
+        : res.send(devices);
+    });
+});
 /**
  * @api {post} /api/registration RegisterUser
  * @apiGroup Users

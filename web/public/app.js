@@ -137,8 +137,9 @@ $('#login').on('click', function() {
     });
 });
 
-const logout = () => {
-    localStorage.removeItem(user);
-    localStorage.setItem('isAuthenticated',false);
+const logout=()=>{
+    localStorage.removeItem('user');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('isAuthenticated');
     location.href = '/login';
-}
+};
