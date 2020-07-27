@@ -129,6 +129,7 @@ $('#login').on('click', function() {
         if(response.success) {
             localStorage.setItem('user',username);
             localStorage.setItem('isAdmin',response.isAdmin);
+            localStorage.setItem('isAuthenticated', true);
             location.href = '/';
         }else{
             $('#loginPassErrorMessage').append(`<p class="alert alert-deanger">${response}</p>`);
@@ -138,5 +139,6 @@ $('#login').on('click', function() {
 
 const logout = () => {
     localStorage.removeItem(user);
+    localStorage.setItem('isAuthenticated',false);
     location.href = '/login';
 }
