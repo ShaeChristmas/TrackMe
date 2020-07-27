@@ -55,6 +55,125 @@ app.post('/api/send-command',(req,res)=>{
     console.log(req.body);
 });
 
+/**
+ * @api {post} /api/authenticate AuthUser
+ * @apiGroup Users
+ * @apiDescription Authenticates user
+ * @apiError UserNotFound
+ * @apiErrorExample Error-Response:
+ *     'Username does not exist"
+ * @apiError IncoPass
+ * @apiErrorExample Error-response:
+ *     'Password does not match'
+ * @apiSuccess goodAuth
+ * @apiSuccessExample
+ * {
+ *      success: true,
+ *      message: 'Authenticated successfully',
+ *      isAdmin: null
+ * }
+ *     
+ */
+app.post('/api/authenticate',(req,res)=> {
+    const {username,pass,isAdmin} = req.body;
+
+    User.findOne({name: username},(err,data) =>{
+        if(err) {
+            res.send(err);
+        }else if (!data) {
+            res.send('Username does not exist.');
+        }else if((data.password == pass)) {
+            return res.json({
+                success: true,
+                message: 'Authenticated successfully',
+                isAdmin: isAdmin
+            });
+        }else{
+            res.send('Password does not match.');
+        }
+    });
+});
+
+/**
+ * @api {post} /api/registration RegisterUser
+ * @apiGroup Users
+ * @apiDescription Registers new User
+ * @apiError UserExists
+ * @apiErrorExample Error-Response:
+ *     'User already exists'
+ * @apiError NullField
+ * @apiErrorExample Error-Response:
+ *     'Cannot have Null fields'
+ * @apiSuccess goodNewUser
+ * @apiSuccessExample Success-Reponse:
+ *     {
+ *        "success": true,
+ *        "message": "Created new user"
+ *     }
+ */
+app.post('/api/registration',(req,res)=> {
+    name = req.body.username;
+    pass = req.body.pass;
+    isAdmin = req.body.isAdmin;
+    User.findOne({name: name},(err,data)=>{
+        if(err) {
+            res.send(err);
+        }else if(data){
+            res.send('User already exists');
+        }else if((name == null)||(pass == null)){
+            res.send('Cannot have Null fields');
+        }else{
+            const newUser = new User({name: name, password: pass, isAdmin:0});
+            newUser.save(err => {
+                return err
+                ? res.send(err)
+                : res.json({
+                    success: true,
+                    message: 'Created new user'
+                });
+            });
+        }
+    });
+});
+
+/**
+ * @api {post} /api/devices/:deviceID/device-history deviceHistory
+ * @apiGroup Devices
+ * @apiDescription Accesses device history
+ * @apiError invDeviceID
+ * @apiSuccess goodDeviceID
+ * @apiSuccessExample Success-Reponse:
+ *    {
+ *       "ts": "1529542230",
+ *       "temp": 12,
+ *       "loc": {
+ *           "lat": -37.850026,
+ *           "lon": 145.117683
+ *       }
+ *    }
+ */
+app.get('/api/devices/:deviceID/device-history', (req,res)=> {
+    const {deviceID} = req.params;
+    Device.findOne({"_id": deviceID},(err,devices)=> {
+        const {sensorData} = devices;
+        return err
+        ? res.send(err)
+        : res.send(sensorData);
+    });
+});
+
+/**
+ * @api {get} /api/users/:user/devices ShowingUserDevices
+ * @apiGroup Devices
+ * @apiDescription Accesses devices that belong to the user
+ */
+app.get('/api/users/:user/devices',(req,res)=>{
+    const{user} =req.params;
+    Device.find({"user":user},(err,devices)=>{
+        return err?res.send(err):res.send(devices);
+    });
+});
+
 const port = process.env.PORT || 5000;
 
 /**
@@ -106,4 +225,6 @@ app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
 
-const Device = require('./models/device');
+const Device = require(`./models/device`);
+const { findOne, findOneAndUpdate } = require(`./models/device`);
+const User = require(`./models/user`);

@@ -104,46 +104,39 @@ $('#reg-account').on('click', function() {
     const username = $('#username').val();
     const pass = $('#password').val();
     const Cpass = $('#Cpassword').val();
+
     $('#passErrorMessage').removeClass().text("");
-    $('#usernameErrorMessage').removeClass().text("");
-
-    const exists = users.find(user => user.name === username);
-    //console.log(exists);
-
-    if (exists == undefined) {
-        if (pass === Cpass) {
-            users.push({name: username, pass});
-            localStorage.setItem('users',JSON.stringify(users));
-        }else{
-            $('#passErrorMessage').addClass("alert alert-error").text("Passwords do not match.");   
-        }
+    if (!(pass === Cpass)) {
+        $('#passErrorMessage').addClass("alert alert-error").text("Passwords do not match.");
     }else{
-        $('#usernameErrorMessage').addClass("alert alert-error").text("Username already exists. Please input a new username.");
+        $.post(`${API_URL}/Registration`, {username,pass}).then(response=>{
+            if(response.success) {
+                location.href = '/login';
+            }else{
+                $('#passErrorMessage').append(`<p class="alert alert-deanger">${response}</p>`);
+            }
+        });
     }
 });
 
+//login click handler
 $('#login').on('click', function() {
     const username = $('#username').val();
     const pass = $('#password').val();
+
     $('#loginPassErrorMessage').removeClass().text("");
-    $('#loginUsernameErrorMessage').removeClass().text("");
-
-    const exists = users.find(user => user.name === username);
-
-    if (exists !== undefined) {
-        if (exists.pass === pass) {
-            isAuthenticated = true;
-            localStorage.setItem('isAuthenticated',isAuthenticated);
+    $.post(`${API_URL}/authenticate`, {username,pass}).then((response)=>{
+        if(response.success) {
+            localStorage.setItem('user',username);
+            localStorage.setItem('isAdmin',response.isAdmin);
             location.href = '/';
         }else{
-            $('#loginPassErrorMessage').addClass("alert alert-error").text('Incorrect Password');
+            $('#loginPassErrorMessage').append(`<p class="alert alert-deanger">${response}</p>`);
         }
-    }else{
-        $('#loginUsernameErrorMessage').addClass("alert alert-error").text("This Username does not exist.");
-    }
+    });
 });
 
 const logout = () => {
-    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem(user);
     location.href = '/login';
 }
