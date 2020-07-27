@@ -47,13 +47,19 @@ const currentUser = localStorage.getItem('user');
 if (currentUser) {
     $.get(`${API_URL}/users/${currentUser}/devices`)
     .then(response => {
-        response.forEach((device) {
+        response.forEach((device)=> {
             $('#devices tbody').append(`
                 <tr data-device-id=${device._id}>
                     <td>${device.user}</td>
                     <td>${device.name}</td>
                 </tr>`
             );
+        });
+        $('#devices tbody tr').on('click', (e) => {
+            const deviceID = e.currentTarget.getAttribute('data-device-id');
+            $.get(`${API_URL}/devices/${deviceID}/device-history`).then(response => {
+                console.log(response);
+            });
         });
     })
     .catch(error => {
