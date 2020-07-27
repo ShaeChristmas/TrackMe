@@ -42,22 +42,29 @@ devices.forEach(function(device) {
     table.appendChild(row);
 });
 */
-$.get(`${API_URL}/devices`)
-.then(response => {
-    response.forEach(function(device) {
-        $('#devices tbody').append(`
-            <tr>
-                <td>${device.user}</td>
-                <td>${device.name}</td>
-            </tr>`
-        );
+const currentUser = localStorage.getItem('user');
+
+if (currentUser) {
+    $.get(`${API_URL}/users/${currentUser}/devices`)
+    .then(response => {
+        response.forEach((device) {
+            $('#devices tbody').append(`
+                <tr data-device-id=${device._id}>
+                    <td>${device.user}</td>
+                    <td>${device.name}</td>
+                </tr>`
+            );
+        });
+    })
+    .catch(error => {
+        console.error(`Error: ${error}`);
     });
-})
-.catch(error => {
-    console.log(`Error: ${error}`);
-});
-
-
+}else {
+    const path = window.location.pathname;
+    if(path !== '/login') {
+        location.href = '/login';
+    }
+}
 
 
 //Listener for the Registration of a new Device.
