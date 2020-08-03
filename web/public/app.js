@@ -4,7 +4,7 @@ $('#footer').load('footer.html');
 const devices = JSON.parse(localStorage.getItem('devices')) || [];
 const users = JSON.parse(localStorage.getItem('users')) || [];
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://track-me-api.vercel.app/api';
 
 //devices.push({user: "Shae", name: "Shae's Laptop"});
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
@@ -56,9 +56,21 @@ if (currentUser) {
             );
         });
         $('#devices tbody tr').on('click', (e) => {
-            const deviceID = e.currentTarget.getAttribute('data-device-id');
-            $.get(`${API_URL}/devices/${deviceID}/device-history`).then(response => {
-                console.log(response);
+            const deviceId = e.currentTarget.getAttribute('data-device-id');
+            $.get(`${API_URL}/devices/${deviceId}/device-history`)
+            .then(response => {
+                response.map(sensorData => {
+                    $('#historyContent').removeClass().text("");
+                    $('#historyContent').append(`
+                    <tr>
+                        <td>${sensorData.ts}</td>
+                        <td>${sensorData.temp}</td>
+                        <td>${sensorData.loc.lat}</td>
+                        <td>${sensorData.loc.lon}</td>
+                    </tr>
+                    `);
+                });
+                $('#historyModal').modal('show');
             });
         });
     })
