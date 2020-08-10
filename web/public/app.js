@@ -5,6 +5,7 @@ const devices = JSON.parse(localStorage.getItem('devices')) || [];
 const users = JSON.parse(localStorage.getItem('users')) || [];
 
 const API_URL = 'https://track-me-api.vercel.app/api';
+const MQTT_URL = 'http://localhost:5001';
 
 //devices.push({user: "Shae", name: "Shae's Laptop"});
 //devices.push({ user: "Mary", name: "Mary's iPhone" });
@@ -121,7 +122,10 @@ function() {
 //Listener for Send Command.
 $('#send-command').on('click', function() {
     const command = $('#command').val();
-    console.log(`command is: ${command}`);
+    const devID = $('#deviceID').val();
+    $.post(`${MQTT_URL}/send-command`, {devID,command}).then(response => {
+        console.log(response);
+    });
 });
 
 //Listener for Register Account

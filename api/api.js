@@ -1,7 +1,8 @@
 const express = require('express');
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URL,{useNewUrlParser: true, useUnifiedTopology: true});
+const uri = "mongodb+srv://schristmas:Sometimesmemesaregr8@cluster0.7g4gx.mongodb.net/TrackMe?retryWrites=true&w=majority";
+mongoose.connect(uri,{useNewUrlParser: true, useUnifiedTopology:true});
 
 const app = express();
 
@@ -44,15 +45,6 @@ app.post('/api/devices',(req,res)=>{
     newDevice.save(err=>{
         return err?res.send(err):res.send('Successfully added device and associated data');
     });
-});
-
-/**
- * @api {post} /api/send-command SendCommand Sending Command to api
- * @apiGroup Devices
- * @apiDescription Sends command to API, logs it and sends to console.
- */
-app.post('/api/send-command',(req,res)=>{
-    console.log(req.body);
 });
 
 /**
@@ -161,9 +153,9 @@ app.post('/api/registration',(req,res)=> {
  *       }
  *    }
  */
-app.get('/api/devices/:deviceID/device-history', (req,res)=> {
-    const {deviceID} = req.params;
-    Device.findOne({"_id": deviceID},(err,devices)=> {
+app.get('/api/devices/:deviceId/device-history', (req,res)=> {
+    const {deviceId} = req.params;
+    Device.findOne({"_id": deviceId},(err,devices)=> {
         const {sensorData} = devices;
         return err
         ? res.send(err)
