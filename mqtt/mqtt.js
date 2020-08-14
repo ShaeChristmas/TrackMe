@@ -22,7 +22,13 @@ app.use(bodyParser.urlencoded({
 const client = mqtt.connect("mqtt://broker.hivemq.com:1883");
 
 client.on('connect', () => {
+    client.subscribe('/sensorData');
     console.log("mqtt connected");
+});
+client.on('message', (topic, message) => {
+    if (topic == '/sensorData') {
+        console.log(`Received message: ${message}`);
+    }
 });
 
 

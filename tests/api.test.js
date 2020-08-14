@@ -68,6 +68,6 @@ test('Device List GET /devices', () => {
     return axios.get(`${API_URL}/devices`)
     .then(resp => resp.data)
     .then(resp => {
-        expect(resp.[0].name).toBe("Mary's iPhone");
+        expect(resp[0].name).toBe("Mary's iPhone");
     });
 });
