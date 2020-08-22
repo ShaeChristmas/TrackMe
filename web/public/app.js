@@ -84,6 +84,7 @@ if (currentUser) {
         if(path !== '/Registration') {
             location.href = '/login';
         }
+        
     }
 }
 
