@@ -43,9 +43,31 @@ devices.forEach(function(device) {
     table.appendChild(row);
 });
 */
-const currentUser = localStorage.getItem('user');
 
-if (currentUser) {
+
+
+
+
+$.get('/auth/google/user', (res)=>{
+    console.log("get runs");
+    const logGoogle = localStorage.getItem('logGoogle');
+    console.log("Log google is apparently "+logGoogle);
+    if (logGoogle){
+        console.log("This is true");
+        localStorage.setItem('user',res.name);
+        localStorage.setItem('isAdmin',res.isAdmin);
+        localStorage.setItem('isAuthenticated',true);
+    }else{
+        console.log("this is false");
+        localStorage.removeItem('user');
+        localStorage.removeItem('isAdmin');
+        localStorage.removeItem('isAuthenticated');
+    }
+});
+
+
+if (localStorage.getItem('logGoogle')) {
+    const currentUser = localStorage.getItem('user');
     $.get(`${API_URL}/users/${currentUser}/devices`)
     .then(response => {
         response.forEach((device)=> {
@@ -81,13 +103,9 @@ if (currentUser) {
 }else {
     const path = window.location.pathname;
     if(path !== '/login') {
-        if(path !== '/Registration') {
-            location.href = '/login';
-        }
-        
+        location.href = '/login';
     }
 }
-
 
 //Listener for the Registration of a new Device.
 
@@ -151,27 +169,14 @@ $('#reg-account').on('click', function() {
     }
 });
 
-//login click handler
-$('#login').on('click', function() {
-    const username = $('#username').val();
-    const pass = $('#password').val();
 
-    $('#loginPassErrorMessage').removeClass().text("");
-    $.post(`${API_URL}/authenticate`, {username,pass}).then((response)=>{
-        if(response.success) {
-            localStorage.setItem('user',username);
-            localStorage.setItem('isAdmin',response.isAdmin);
-            localStorage.setItem('isAuthenticated', true);
-            location.href = '/';
-        }else{
-            $('#loginPassErrorMessage').append(`<p class="alert alert-deanger">${response}</p>`);
-        }
-    });
+//login click handler
+$('#login').on('click', (req,res)=> {
+    localStorage.setItem('logGoogle',true);
+    location.href ='/auth/google';
 });
 
-const logout=()=>{
-    localStorage.removeItem('user');
-    localStorage.removeItem('isAdmin');
-    localStorage.removeItem('isAuthenticated');
-    location.href = '/login';
-};
+$('#logout').on('click', (req,res)=>{
+    localStorage.removeItem('logGoogle');
+    location.href='/login';
+});

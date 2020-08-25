@@ -17,8 +17,8 @@
         </div>
     </div>
     <script>
-        const isAuthenicated = localStorage.getItem('isAuthenticated');
-        const logoutElement = '<a class="nav-item nav-link" onClick = "logout()">Logout</a>';
+        const isAuthenicated = localStorage.getItem('logGoogle');
+        const logoutElement = '<a class="nav-item nav-link" href="/logout">Logout</a>';
         const loginElement = '<a class ="nav-item nav-link" href="/login">Login</a>'
 
         if (isAuthenicated) {
