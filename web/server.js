@@ -6,6 +6,12 @@ const base = `${__dirname}/public`;
 const dotenv = require('dotenv');
 const cookie = require('cookie-session');
 
+const User = mongoose.model('User', new mongoose.Schema({
+    googleID: String,
+    name: String,
+    isAdmin: Boolean
+}));
+
 dotenv.config();
 const {MONGO_URL} = process.env
 mongoose.connect(MONGO_URL, {useNewUrlParser:true, useUnifiedTopology:true})
@@ -125,5 +131,3 @@ app.get('*',(req,res) => {
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
-
-const User = require(`./models/user`);
