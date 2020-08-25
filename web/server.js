@@ -23,6 +23,7 @@ passport.use(new GoogleStrategy(
         clientSecret: GOOGLE_CLIENT_SECRET,
         callbackURL: "/auth/google/redirect"
     }, (accessToken, refreshToken, profile, done) => {
+        
         User.findOne({googleID: profile.id}).then((currentUser)=> {
             if(currentUser){
                 done(null,currentUser);
@@ -39,20 +40,19 @@ passport.use(new GoogleStrategy(
     }
 ));
 
-passport.serializeUser((user,done)=>{
-    done(null,user.id);
-});
-
-passport.deserializeUser((id,done)=>{
-    User.findById(id).then(user => {
-        done(null,user);
-    });
-});
-
 app.use(cookie({
     maxAge: 24*60*60*1000,
     keys:[process.env.COOKIE_KEY]
 }));
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+passport.deserializeUser((id, done) => {
+    User.findById(id).then(user => {
+      done(null, user);
+    });
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
